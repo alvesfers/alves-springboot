@@ -2,9 +2,10 @@ package com.example.demo;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.NoArgsConstructor;
 
 @Document(collection = "tb_acai")
-
+@NoArgsConstructor // Adicionando um construtor sem argumentos
 public class Acai {
 
     @Id

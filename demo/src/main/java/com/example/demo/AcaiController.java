@@ -3,26 +3,31 @@ package com.example.demo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/acais")
+@CrossOrigin(origins = "http://localhost:3000")  // Habilita CORS para o frontend
+@RequestMapping("/acais")  // Define a base da URL para /acais
 public class AcaiController {
 
     @Autowired
-    private AcaiService acaiService;
+    private AcaiRepository acaiRepository;
 
     @PostMapping
-    public ResponseEntity<Acai> criarAcai(@RequestBody Acai acai) {
-        try {
-            Acai acaiCriado = acaiService.save(acai);
-            return new ResponseEntity<>(acaiCriado, HttpStatus.CREATED);
-        } catch (Exception e) {
-            e.printStackTrace(); // Opcional: para depuração
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); // Retorna 500 em caso de erro
+    public ResponseEntity<Acai> criarAcai(@RequestBody Acai novoAcai) {
+        // Verifica se algum campo obrigatório está ausente
+        if (novoAcai.getNome() == null || 
+            novoAcai.getDescricao() == null || 
+            novoAcai.getPreco() == null || 
+            novoAcai.getQtdComplemento() == null) {
+            // Retorna BAD_REQUEST se algum campo obrigatório estiver ausente
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
+        
+        // Salva o novo açai no banco de dados
+        Acai acaiSalvo = acaiRepository.save(novoAcai);
+        
+        // Retorna a resposta com status CREATED e o açai criado
+        return ResponseEntity.status(HttpStatus.CREATED).body(acaiSalvo);
     }
 }
