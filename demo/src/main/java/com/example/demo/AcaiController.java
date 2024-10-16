@@ -6,8 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")  // Habilita CORS para o frontend
-@RequestMapping("/acais")  // Define a base da URL para /acais
+@CrossOrigin(origins = "http://localhost:3000") 
+@RequestMapping("/acais")  
 public class AcaiController {
 
     @Autowired
@@ -15,19 +15,21 @@ public class AcaiController {
 
     @PostMapping
     public ResponseEntity<Acai> criarAcai(@RequestBody Acai novoAcai) {
-        // Verifica se algum campo obrigatório está ausente
         if (novoAcai.getNome() == null || 
             novoAcai.getDescricao() == null || 
             novoAcai.getPreco() == null || 
-            novoAcai.getQtdComplemento() == null) {
-            // Retorna BAD_REQUEST se algum campo obrigatório estiver ausente
+            novoAcai.getQtdComplemento() == null || 
+            novoAcai.getTamanho() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        
-        // Salva o novo açai no banco de dados
+    
         Acai acaiSalvo = acaiRepository.save(novoAcai);
-        
-        // Retorna a resposta com status CREATED e o açai criado
         return ResponseEntity.status(HttpStatus.CREATED).body(acaiSalvo);
+    }
+
+    // Mapeamento para a rota raiz
+    @GetMapping("/")
+    public String home() {
+        return "Bem-vindo à API de Açaís!";
     }
 }

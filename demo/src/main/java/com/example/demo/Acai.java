@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.NoArgsConstructor;
 
 @Document(collection = "tb_acai")
-@NoArgsConstructor // Adicionando um construtor sem argumentos
+@NoArgsConstructor
 public class Acai {
 
     @Id
@@ -15,13 +15,16 @@ public class Acai {
     private Float preco;
     private Integer qtdComplemento;
     private Boolean isTrufado;
+    private String tamanho; // Campo adicionado
 
-    public Acai(String nome, String descricao, Float preco, Integer qtdComplemento, Boolean isTrufado) {
+    // Construtor, Getters e Setters
+    public Acai(String nome, String descricao, Float preco, Integer qtdComplemento, Boolean isTrufado, String tamanho) {
         this.nome = nome;
         this.descricao = descricao;
         this.preco = preco;
         this.qtdComplemento = qtdComplemento;
         this.isTrufado = isTrufado;
+        this.tamanho = tamanho;
     }
 
     public String getId() {
@@ -70,5 +73,13 @@ public class Acai {
 
     public void setIsTrufado(Boolean isTrufado) {
         this.isTrufado = isTrufado;
+    }
+
+    public String getTamanho() {
+        return tamanho;
+    }
+
+    public void setTamanho(String tamanho) {
+        this.tamanho = tamanho;
     }
 }

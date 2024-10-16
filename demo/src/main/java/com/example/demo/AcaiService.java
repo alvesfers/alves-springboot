@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 public class AcaiService {
 
     @Autowired
-    private AcaiRepository acaiRepository; // Repositório para interagir com o MongoDB
+    private AcaiRepository acaiRepository; 
 
     public Acai save(Acai acai) {
-        return acaiRepository.save(acai); // Salva o Açaí no banco de dados
+        return acaiRepository.save(acai);
     }
 }
