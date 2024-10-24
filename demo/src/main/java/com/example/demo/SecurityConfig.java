@@ -1,22 +1,18 @@
-// package com.example.demo;
+package com.example.demo;
 
-// import org.springframework.context.annotation.Configuration;
-// import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-// import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-// import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-// import org.springframework.web.servlet.config.annotation.CorsRegistry;
-// import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.web.SecurityFilterChain;
 
-// @Configuration
-// @EnableWebSecurity
-// public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@Configuration
+public class SecurityConfig {
 
-//     @Override
-//     protected void configure(HttpSecurity http) throws Exception {
-//         http
-//             .csrf().disable()  // Desabilitar CSRF para facilitar testes no ambiente de desenvolvimento
-//             .authorizeRequests()
-//             .antMatchers("/acais/**").permitAll()  // Permitir acesso à URL /acais sem autenticação
-//             .anyRequest().authenticated();  // Proteger outras URLs
-//     }
-// }
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+            .authorizeRequests()
+            .anyRequest().permitAll(); // Permitir todas as requisições sem autenticação
+        return http.build();
+    }
+}
