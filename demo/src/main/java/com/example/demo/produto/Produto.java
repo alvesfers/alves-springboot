@@ -13,6 +13,7 @@ public class Produto {
     private double precoProduto;
     private int tamanhoProduto;
     private Integer qtdComplemento;
+    private int tipoProduto;  // Novo campo
     private int isAtivo; // 0 = inativo, 1 = ativo
 
     // Getters e Setters
@@ -62,6 +63,14 @@ public class Produto {
 
     public void setQtdComplemento(Integer qtdComplemento) {
         this.qtdComplemento = qtdComplemento;
+    }
+
+    public int getTipoProduto() {  // Getter para tipoProduto
+        return tipoProduto;
+    }
+
+    public void setTipoProduto(int tipoProduto) {  // Setter para tipoProduto
+        this.tipoProduto = tipoProduto;
     }
 
     public int getIsAtivo() {
