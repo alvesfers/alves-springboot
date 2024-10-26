@@ -22,9 +22,9 @@ public class UsuarioService {
         usuario.setSenhaUsuario(passwordEncoder.encode(usuario.getSenhaUsuario()));
         
         if (usuario.getTaskUsuario() == 0) {
-            usuario.setTaskUsuario(0); // Valor padrão se não for fornecido
+            usuario.setTaskUsuario(0);
         }
-        
+
         return usuarioRepository.save(usuario);
     }
 
@@ -40,8 +40,26 @@ public class UsuarioService {
 
     // Atualizar usuário
     public Usuario atualizarUsuario(String id, Usuario usuarioAtualizado) {
-        usuarioAtualizado.setIdUsuario(id);
-        return usuarioRepository.save(usuarioAtualizado);
+        Optional<Usuario> usuarioExistente = usuarioRepository.findById(id);
+
+        if (usuarioExistente.isPresent()) {
+            Usuario usuario = usuarioExistente.get();
+            usuario.setNomeUsuario(usuarioAtualizado.getNomeUsuario());
+            usuario.setEmailUsuario(usuarioAtualizado.getEmailUsuario());
+            usuario.setNumEnderecoUsuario(usuarioAtualizado.getNumEnderecoUsuario());
+            usuario.setComplementoUsuario(usuarioAtualizado.getComplementoUsuario());
+            usuario.setCepUsuario(usuarioAtualizado.getCepUsuario());
+            usuario.setNivelUsuario(usuarioAtualizado.getNivelUsuario());
+            usuario.setUsuarioAtivo(usuarioAtualizado.getUsuarioAtivo());
+
+            if (usuarioAtualizado.getSenhaUsuario() != null && !usuarioAtualizado.getSenhaUsuario().isEmpty()) {
+                usuario.setSenhaUsuario(passwordEncoder.encode(usuarioAtualizado.getSenhaUsuario()));
+            }
+
+            return usuarioRepository.save(usuario);
+        } else {
+            throw new RuntimeException("Usuário não encontrado.");
+        }
     }
 
     // Excluir usuário
@@ -52,6 +70,15 @@ public class UsuarioService {
     // Autenticar usuário por email e senha
     public boolean autenticar(String email, String senha) {
         Optional<Usuario> usuario = usuarioRepository.findByEmailUsuario(email);
-        return usuario.isPresent() && passwordEncoder.matches(senha, usuario.get().getSenhaUsuario());
+    
+        if (usuario.isPresent()) {
+            boolean senhaValida = passwordEncoder.matches(senha, usuario.get().getSenhaUsuario());
+            System.out.println("Usuário encontrado: " + usuario.get().getEmailUsuario());
+            System.out.println("Senha válida: " + senhaValida);
+            return senhaValida;
+        }
+    
+        System.out.println("Usuário não encontrado.");
+        return false;
     }
 }

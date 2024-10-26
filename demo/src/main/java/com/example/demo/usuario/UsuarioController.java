@@ -1,6 +1,8 @@
 package com.example.demo.usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,9 +23,14 @@ public class UsuarioController {
 
     // Login de usuário
     @PostMapping("/login")
-    public String login(@RequestBody Usuario usuario) {
+    public ResponseEntity<String> login(@RequestBody Usuario usuario) {
         boolean autenticado = usuarioService.autenticar(usuario.getEmailUsuario(), usuario.getSenhaUsuario());
-        return autenticado ? "Login bem-sucedido!" : "Credenciais inválidas!";
+    
+        if (autenticado) {
+            return ResponseEntity.ok("Login bem-sucedido!");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas!");
+        }
     }
 
     // Buscar um usuário pelo email

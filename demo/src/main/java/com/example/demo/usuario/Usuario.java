@@ -31,10 +31,32 @@ public class Usuario {
     private Integer usuarioAtivo; // 0 = inativo, 1 = ativo
 
     private String cpfUsuario; // Pode ser nulo
-    private String enderecoUsuario; // Pode ser nulo
+    private String numEnderecoUsuario; // Substituição realizada
+    private String complementoUsuario; // Novo campo adicionado
     private String cepUsuario; // Pode ser nulo
 
-    private int taskUsuario = 0; // Valor padrão 0
+    private int taskUsuario = 0; // Valor padrão
+
+    // Construtor sem parâmetros (necessário para frameworks)
+    public Usuario() {}
+
+    // Construtor com todos os parâmetros
+    public Usuario(String idUsuario, String nomeUsuario, String emailUsuario,
+                   String senhaUsuario, Integer nivelUsuario, Integer usuarioAtivo,
+                   String cpfUsuario, String numEnderecoUsuario, String complementoUsuario,
+                   String cepUsuario, int taskUsuario) {
+        this.idUsuario = idUsuario;
+        this.nomeUsuario = nomeUsuario;
+        this.emailUsuario = emailUsuario;
+        this.senhaUsuario = senhaUsuario;
+        this.nivelUsuario = nivelUsuario;
+        this.usuarioAtivo = usuarioAtivo;
+        this.cpfUsuario = cpfUsuario;
+        this.numEnderecoUsuario = numEnderecoUsuario;
+        this.complementoUsuario = complementoUsuario;
+        this.cepUsuario = cepUsuario;
+        this.taskUsuario = taskUsuario;
+    }
 
     // Getters e Setters
     public String getIdUsuario() {
@@ -93,12 +115,20 @@ public class Usuario {
         this.cpfUsuario = cpfUsuario;
     }
 
-    public String getEnderecoUsuario() {
-        return enderecoUsuario;
+    public String getNumEnderecoUsuario() {
+        return numEnderecoUsuario;
     }
 
-    public void setEnderecoUsuario(String enderecoUsuario) {
-        this.enderecoUsuario = enderecoUsuario;
+    public void setNumEnderecoUsuario(String numEnderecoUsuario) {
+        this.numEnderecoUsuario = numEnderecoUsuario;
+    }
+
+    public String getComplementoUsuario() {
+        return complementoUsuario;
+    }
+
+    public void setComplementoUsuario(String complementoUsuario) {
+        this.complementoUsuario = complementoUsuario;
     }
 
     public String getCepUsuario() {
