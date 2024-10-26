@@ -3,25 +3,19 @@ package com.example.demo.loja;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import jakarta.validation.constraints.NotBlank;
-
 @Document(collection = "lojas")
 public class Loja {
 
     @Id
     private String idLoja;
-
-    @NotBlank(message = "O nome da loja é obrigatório.")
     private String nomeLoja;
-
-    @NotBlank(message = "O responsável pela loja é obrigatório.")
     private String responsavelLoja;
-
     private String telefoneLoja;
     private String enderecoLoja;
     private String complementoLoja;
     private String cepLoja;
     private String chavePix;
+    private double valorKM;  // Novo campo para valor por KM
 
     // Getters e Setters
     public String getIdLoja() {
@@ -86,5 +80,13 @@ public class Loja {
 
     public void setChavePix(String chavePix) {
         this.chavePix = chavePix;
+    }
+
+    public double getValorKM() {
+        return valorKM;
+    }
+
+    public void setValorKM(double valorKM) {
+        this.valorKM = valorKM;
     }
 }
